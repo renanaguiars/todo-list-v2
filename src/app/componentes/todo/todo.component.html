@@ -1,0 +1,29 @@
+<body>
+    <div class="container">
+        <h2>To-Do List</h2>
+        <input [(ngModel)]="newTodo" placeholder="Nova tarefa">
+        <button (click)="addTodo()"><i class="material-icons">add</i></button>
+
+        <ul>
+          <li *ngFor="let todo of todos; let i = index; trackBy: trackByFn">
+            <ng-container *ngIf="!todo.isEditing; else editMode">
+                {{ todo.text }}
+                <div class="btn-group">
+                    <button class="save-btn" (click)="editTodo(i)"><i class="material-icons">edit</i></button>
+                    <button class="cancel-btn" (click)="removeTodo(i)"><i class="material-icons">delete</i></button>
+                </div>
+            </ng-container>
+
+            <ng-template #editMode>
+                <section class="edit-mode">
+                    <input class="edit-input" [(ngModel)]="todo.text" #editedInput />
+                    <div class="btn-group">
+                        <button class="save-btn" (click)="saveTodo(i, editedInput.value)"><i class="material-icons">check</i></button>
+                        <button class="cancel-btn" (click)="cancelEdit(i)"><i class="material-icons">cancel</i></button>
+                    </div>
+                </section>
+            </ng-template>
+          </li>
+        </ul>
+      </div>
+</body>
